@@ -5,7 +5,7 @@ const connecPool = mysql.createPool({
   port: 3306,
   user: "root",
   password: "123456",
-  database: "booksborrowing",
+  database: "cms-tem",
   connectionLimit: 5,
 });
 
