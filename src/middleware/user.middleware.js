@@ -5,8 +5,8 @@ const {
   USER_ALREADY_EXISTS,
 } = require("../error-request/error-type");
 const userService = require("../services/user.service");
-const md5password = require("../utils/md5passowrd");
-async function verfiyUser(ctx, next) {
+const md5password = require("../utils/md5password");
+async function verifyUser(ctx, next) {
   const { username, password, nickname } = ctx.request.body;
   // 判断是否用户名密码是否为空
   if (!username || !password) {
@@ -30,6 +30,6 @@ async function passwordEncryption(ctx, next) {
   await next();
 }
 module.exports = {
-  verfiyUser,
+  verifyUser,
   passwordEncryption,
 };

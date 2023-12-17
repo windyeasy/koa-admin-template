@@ -6,7 +6,7 @@ class UserController {
       username,
       password,
       nickname,
-      telphone = null,
+      telephone = null,
       email = null,
       intro = null,
     } = ctx.request.body;
@@ -14,7 +14,7 @@ class UserController {
       username,
       password,
       nickname,
-      telphone,
+      telephone,
       email,
       intro,
     });
