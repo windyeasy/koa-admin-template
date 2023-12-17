@@ -24,6 +24,7 @@ async function verifyLogin(ctx, next) {
   ctx.user = users[0];
   await next();
 }
+
 // 验证是否登录授权
 async function verifyAuth(ctx, next) {
   const authorization = ctx.headers["authorization"];
