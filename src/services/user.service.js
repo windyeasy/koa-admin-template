@@ -1,6 +1,6 @@
 const connection = require("../app/database");
 class UserService {
-  // 通过用户查询用户
+  // 通过用户名查询用户
   async queryUserByUsername(username) {
     const statement = "SELECT * FROM user WHERE username=?";
     const [result] = await connection.execute(statement, [username]);

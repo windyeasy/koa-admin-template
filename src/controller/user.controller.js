@@ -23,7 +23,9 @@ class UserController {
     };
   }
   // 编辑用户
-  async update() {}
+  async update(ctx) {
+    const { id } = ctx.params;
+  }
   // 查询用户列表
   async list() {}
 }
