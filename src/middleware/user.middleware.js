@@ -17,8 +17,8 @@ async function verifyUser(ctx, next) {
     return errorRequest.throw(FIELD_NOT_NULL, ctx, "nickname");
   }
   //   判断用户是否存在
-  const userData = await userService.queryUser(username);
-  if (userData.length) {
+  const isExists = await userService.checkUserExists(username);
+  if (isExists) {
     return errorRequest.throw(USER_ALREADY_EXISTS, ctx);
   }
   await next();
