@@ -1,5 +1,9 @@
 const CreateErrorRequest = require("./core/create-error-request");
-const { USERNAME_OR_PASSWORD_NOT_NULL } = require("./error-type");
+const {
+  USERNAME_OR_PASSWORD_NOT_NULL,
+  FIELD_NOT_NULL,
+  USER_ALREADY_EXISTS,
+} = require("./error-type");
 
 function handleError(err, ctx, fieldName = "") {
   let message = "";
@@ -11,11 +15,11 @@ function handleError(err, ctx, fieldName = "") {
       break;
     case FIELD_NOT_NULL:
       code = "-1002";
-      message = `${fieldName}字段不能为空`;
+      message = `${fieldName}字段不能为空！`;
       break;
     case USER_ALREADY_EXISTS:
       code = "-1003";
-      message = `用户已存在`;
+      message = `用户已存在！`;
       break;
   }
   ctx.body = {
