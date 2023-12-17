@@ -1,30 +1,21 @@
 const userService = require("../services/user.service");
+const fetchParamsId = require("../utils/fetch-params-id");
+const { successModel } = require("../utils/request-model");
+
 class UserController {
   async create(ctx) {
-    const {
-      username,
-      password,
-      nickname,
-      telephone = null,
-      email = null,
-      intro = null,
-    } = ctx.request.body;
-    await userService.create({
-      username,
-      password,
-      nickname,
-      telephone,
-      email,
-      intro,
-    });
-    ctx.body = {
-      code: 0,
-      message: "创建用户成功！",
-    };
+    await userService.create(ctx.request.body);
+    ctx.body = successModel("添加用户成功！");
+  }
+  // 删除用户
+  async remove(ctx) {
+    await userService.remove(fetchParamsId(ctx));
+    ctx.body = successModel("删除用户成功！");
   }
   // 编辑用户
   async update(ctx) {
-    const { id } = ctx.params;
+    await userService.update(fetchParamsId(ctx), ctx.request.body);
+    ctx.body = successModel("编辑用户成功！");
   }
   // 查询用户列表
   async list() {}

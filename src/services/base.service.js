@@ -1,14 +1,30 @@
 const connection = require("../app/database");
+const { parseUpdatePayload } = require("../utils/parse-update-payload");
 
 class BaseService {
-  async remove(tbName, id) {
-    const statement = `DELETE FROM ${tbName} WHERE id=?`;
+  constructor(tbName) {
+    this.tbName = tbName;
+  }
+
+  //   用户创建
+  async create(payload) {
+    const statement = `INSERT INTO ${this.tbName} SET ?`;
+    const [result] = await connection.query(statement, payload);
+    return result;
+  }
+  //   用户删除
+  async remove(id) {
+    const statement = `DELETE FROM ${this.tbName} WHERE id=?`;
     const [result] = await connection.query(statement, [id]);
     return result;
   }
+  //   用户更新
+  async update(id, payload) {
+    const { statement: setStatement, values } = parseUpdatePayload(payload);
+    const statement = `UPDATE ${this.tbName} SET ${setStatement}  WHERE id=?`;
+    const [result] = await connection.query(statement, [...values, id]);
+    return result;
+  }
 }
-const baseService = new BaseService();
-module.exports = {
-  baseService,
-  BaseService,
-};
+
+module.exports = BaseService;
