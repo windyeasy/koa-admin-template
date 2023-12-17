@@ -1,5 +1,4 @@
 const connection = require("../app/database");
-
 class UserService {
   // 通过用户查询用户
   async queryUserByUsername(username) {

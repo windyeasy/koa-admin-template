@@ -1,5 +1,4 @@
 const userService = require("../services/user.service");
-
 class UserController {
   async create(ctx) {
     const {
@@ -23,6 +22,10 @@ class UserController {
       message: "创建用户成功！",
     };
   }
+  // 编辑用户
+  async update() {}
+  // 查询用户列表
+  async list() {}
 }
 
 module.exports = new UserController();
