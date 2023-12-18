@@ -20,12 +20,16 @@ class UserService extends BaseService {
   }
   // 查询用户列表
   async queryList(offset, pageSize) {
-    const statement = `SELECT * FROM ${this.tbName}  LIMIT ? OFFSET ?`;
+    const statement = `SELECT id, username, nickname, telephone, 
+            email, intro, createAt, updateAt 
+    FROM ${this.tbName}  LIMIT ? OFFSET ?`;
     const [result] = await connection.query(statement, [pageSize, offset]);
     return result;
   }
   async queryInfo(id) {
-    const statement = `SELECT * FROM ${this.tbName}  WHERE id=?`;
+    const statement = `SELECT id, username, nickname, telephone, 
+            email, intro, createAt, updateAt 
+     FROM ${this.tbName}  WHERE id=?`;
     const [result] = await connection.query(statement, [id]);
     return result[0];
   }
