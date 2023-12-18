@@ -1,4 +1,5 @@
 const userService = require("../services/user.service");
+const { fetchPageInfo } = require("../utils/fetch-page-info");
 const fetchParamsId = require("../utils/fetch-params-id");
 const { successModel } = require("../utils/request-model");
 
@@ -17,8 +18,20 @@ class UserController {
     await userService.update(fetchParamsId(ctx), ctx.request.body);
     ctx.body = successModel("编辑用户成功！");
   }
-  // 查询用户列表
-  async list() {}
+  // 查询用户列
+  async list(ctx) {
+    // 获取处理过的分页信息
+    const { size, offset } = fetchPageInfo(ctx);
+    const result = await userService.queryList(offset, size);
+    const total = await userService.fetchTotal();
+    ctx.body = successModel({
+      message: "列表获取成功",
+      data: {
+        list: result,
+        total,
+      },
+    });
+  }
 }
 
 module.exports = new UserController();

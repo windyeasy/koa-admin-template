@@ -18,6 +18,12 @@ class UserService extends BaseService {
     const result = await this.queryUserByUsername(username);
     return !!result.length;
   }
+  // 查询用户列表
+  async queryList(offset, pageSize) {
+    const statement = `SELECT * FROM ${this.tbName}  LIMIT ? OFFSET ?`;
+    const [result] = await connection.query(statement, [pageSize, offset]);
+    return result;
+  }
 }
 const userService = new UserService("user");
 module.exports = userService;

@@ -4,7 +4,12 @@ const {
   passwordEncryption,
 } = require("../middleware/user.middleware");
 
-const { create, update, remove } = require("../controller/user.controller");
+const {
+  create,
+  update,
+  remove,
+  list,
+} = require("../controller/user.controller");
 const { verifyAuth } = require("../middleware/login.middleware");
 
 const userRouter = new KoaRouter({
@@ -16,4 +21,6 @@ userRouter.post("/", verifyAuth, verifyUser, passwordEncryption, create);
 userRouter.delete("/:id", verifyAuth, remove);
 // 编辑用户
 userRouter.patch("/:id", verifyAuth, update);
+// 查询用户列表
+userRouter.get("/", verifyAuth, list);
 module.exports = userRouter;
