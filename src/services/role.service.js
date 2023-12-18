@@ -18,6 +18,20 @@ class RoleService extends BaseService {
     });
     return !!result.length;
   }
+  // 查询角色列表
+  async queryList(offset, pageSize) {
+    const statement = `SELECT *
+    FROM ${this.tbName}  LIMIT ? OFFSET ?`;
+    const [result] = await connection.query(statement, [pageSize, offset]);
+    return result;
+  }
+  //   查询角色信息
+  async queryInfo(id) {
+    const statement = `SELECT *
+     FROM ${this.tbName}  WHERE id=?`;
+    const [result] = await connection.query(statement, [id]);
+    return result[0];
+  }
 }
 const roleService = new RoleService("roles");
 module.exports = roleService;
