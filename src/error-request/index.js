@@ -21,7 +21,7 @@ function handleError(err, ctx, fieldName = "") {
       break;
     case USER_ALREADY_EXISTS:
       code = "-1003";
-      message = `用户已存在！`;
+      message = `用户已占用！`;
       break;
     case USERNAME_OR_PASSWORD_ERROR:
       code = "-1004";
@@ -29,7 +29,7 @@ function handleError(err, ctx, fieldName = "") {
       break;
     case IS_EXISTS:
       code = "-1004";
-      message = `${fieldName}已存在`;
+      message = `${fieldName}已占用`;
       break;
   }
   ctx.body = {

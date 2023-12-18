@@ -2,6 +2,7 @@ const KoaRouter = require("@koa/router");
 const {
   verifyUser,
   passwordEncryption,
+  verifyEditUser,
 } = require("../middleware/user.middleware");
 
 const {
@@ -21,7 +22,7 @@ userRouter.post("/", verifyAuth, verifyUser, passwordEncryption, create);
 // 删除用户
 userRouter.delete("/:id", verifyAuth, remove);
 // 编辑用户
-userRouter.patch("/:id", verifyAuth, update);
+userRouter.patch("/:id", verifyAuth, verifyEditUser, update);
 // 查询用户列表
 userRouter.get("/", verifyAuth, list);
 // 获取用户详情
