@@ -5,6 +5,7 @@ const {
   USER_ALREADY_EXISTS,
   USERNAME_OR_PASSWORD_ERROR,
   IS_EXISTS,
+  IS_NOT_EXISTS,
 } = require("./error-type");
 
 function handleError(err, ctx, fieldName = "") {
@@ -30,6 +31,10 @@ function handleError(err, ctx, fieldName = "") {
     case IS_EXISTS:
       code = "-1004";
       message = `${fieldName}已占用`;
+      break;
+    case IS_NOT_EXISTS:
+      code = "-1005";
+      message = `${fieldName}不存在`;
       break;
   }
   ctx.body = {
