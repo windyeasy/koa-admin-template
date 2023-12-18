@@ -1,4 +1,5 @@
 const departmentService = require("../services/department.service");
+const { fetchPageInfo } = require("../utils/fetch-page-info");
 const fetchParamsId = require("../utils/fetch-params-id");
 const { successModel } = require("../utils/request-model");
 
@@ -15,8 +16,30 @@ class DepartmentController {
   }
   // 编辑部门
   async update(ctx) {
-    await departmentService.update(fetchParamsId(ctx), ctx.editPayload);
+    await departmentService.update(fetchParamsId(ctx), ctx.payload);
     ctx.body = successModel("编辑部门成功！");
+  }
+  //   部门列表查询
+  async list(ctx) {
+    // 获取处理过的分页信息
+    const { size, offset } = fetchPageInfo(ctx);
+    const result = await departmentService.queryList(offset, size);
+    const total = await departmentService.fetchTotal();
+    ctx.body = successModel({
+      message: "列表获取成功",
+      data: {
+        list: result,
+        total,
+      },
+    });
+  }
+  //  获取部门详情
+  async detail(ctx) {
+    const result = await departmentService.queryInfo(fetchParamsId(ctx));
+    ctx.body = successModel({
+      message: "详情获取成功！",
+      data: result,
+    });
   }
 }
 

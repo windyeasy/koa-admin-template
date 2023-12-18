@@ -25,7 +25,7 @@ async function verifyDepartment(ctx, next) {
       key: "depName",
       value: depName,
     });
-    if (depList && !depList.length) {
+    if (depList && depList.length) {
       return errorRequest.throw(IS_EXISTS, ctx, "部门名称");
     }
   }
