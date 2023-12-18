@@ -31,6 +31,12 @@ class BaseService {
     const [result] = await connection.query(statement, []);
     return result[0].total;
   }
+  // 通过key与值查询字段
+  async queryDataByKeyValue(payload) {
+    const statement = `SELECT * FROM ${this.tbName} WHERE ${payload.key}=?`;
+    const [result] = await connection.execute(statement, [payload.value]);
+    return result;
+  }
 }
 
 module.exports = BaseService;

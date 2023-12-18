@@ -4,6 +4,7 @@ const {
   FIELD_NOT_NULL,
   USER_ALREADY_EXISTS,
   USERNAME_OR_PASSWORD_ERROR,
+  IS_EXISTS,
 } = require("./error-type");
 
 function handleError(err, ctx, fieldName = "") {
@@ -25,6 +26,10 @@ function handleError(err, ctx, fieldName = "") {
     case USERNAME_OR_PASSWORD_ERROR:
       code = "-1004";
       message = `用户名或密码错误！`;
+      break;
+    case IS_EXISTS:
+      code = "-1004";
+      message = `${fieldName}已存在`;
       break;
   }
   ctx.body = {
