@@ -9,6 +9,7 @@ const {
   update,
   remove,
   list,
+  detail,
 } = require("../controller/user.controller");
 const { verifyAuth } = require("../middleware/login.middleware");
 
@@ -23,4 +24,6 @@ userRouter.delete("/:id", verifyAuth, remove);
 userRouter.patch("/:id", verifyAuth, update);
 // 查询用户列表
 userRouter.get("/", verifyAuth, list);
+// 获取用户详情
+userRouter.get("/:id", verifyAuth, detail);
 module.exports = userRouter;

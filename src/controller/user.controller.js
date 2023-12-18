@@ -32,6 +32,13 @@ class UserController {
       },
     });
   }
+  async detail(ctx) {
+    const result = await userService.queryInfo(fetchParamsId(ctx));
+    ctx.body = successModel({
+      message: "详情获取成功！",
+      data: result,
+    });
+  }
 }
 
 module.exports = new UserController();
