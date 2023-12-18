@@ -1,4 +1,5 @@
 const roleService = require("../services/role.service");
+const fetchParamsId = require("../utils/fetch-params-id");
 const { successModel } = require("../utils/request-model");
 
 class RoleController {
@@ -13,7 +14,7 @@ class RoleController {
   }
   // 编辑用户
   async update(ctx) {
-    await userService.update(fetchParamsId(ctx), ctx.request.body);
+    await roleService.update(fetchParamsId(ctx), ctx.editPayload);
     ctx.body = successModel("编辑角色成功！");
   }
 }
