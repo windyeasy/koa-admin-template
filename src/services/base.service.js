@@ -31,11 +31,24 @@ class BaseService {
     const [result] = await connection.query(statement, []);
     return result[0].total;
   }
-  // 通过key与值查询字段
+  /**
+   * 通过key与value查询字段
+   * @param { {key: string, value: any} } payload
+   * @returns {any[]}
+   */
   async queryDataByKeyValue(payload) {
     const statement = `SELECT * FROM ${this.tbName} WHERE ${payload.key}=?`;
     const [result] = await connection.execute(statement, [payload.value]);
     return result;
+  }
+  /**
+   * 通过key与value判断值是否存在
+   * @param { {key: string, value: any} } payload
+   * @returns { boolean}
+   */
+  async checkIsExitsByKeyValue(payload) {
+    const [result] = await this.queryDataByKeyValue(payload);
+    return !!result.length;
   }
 }
 
