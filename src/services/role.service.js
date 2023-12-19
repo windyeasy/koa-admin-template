@@ -21,7 +21,7 @@ class RoleService extends BaseService {
   // 查询角色列表
   async queryList(offset, pageSize) {
     const statement = `SELECT *
-    FROM ${this.tbName}  LIMIT ? OFFSET ?`;
+    FROM ${this.tbName}  ORDER BY sort ASC LIMIT ? OFFSET ?`;
     const [result] = await connection.query(statement, [pageSize, offset]);
     return result;
   }
