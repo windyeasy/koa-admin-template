@@ -36,12 +36,15 @@ async function verifyAuth(ctx, next) {
     ctx.user = result;
   } catch (err) {
     console.log(err);
+    ctx.user = null;
     ctx.body = {
       code: -1012,
       message: "token无效或过期请重新登录",
     };
     return;
   }
-  await next();
+  if (ctx.user) {
+    await next();
+  }
 }
 module.exports = { verifyLogin, verifyAuth };
