@@ -16,7 +16,9 @@ class DepartmentService extends BaseService {
     const statement = `SELECT *
      FROM ${this.tbName}  WHERE id=?`;
     const [result] = await connection.query(statement, [id]);
-    return result[0];
+    const childrenStatement = `SELECT * FROM ${this.tbName} WHERE parentId=?`;
+    const depList = await childrenQuery(result, childrenStatement);
+    return depList[0];
   }
 }
 const departmentService = new DepartmentService("department");
