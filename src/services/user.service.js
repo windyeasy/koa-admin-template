@@ -20,16 +20,31 @@ class UserService extends BaseService {
   }
   // 查询用户列表
   async queryList(offset, pageSize) {
-    const statement = `SELECT id, username, nickname, telephone, 
+    const statement = `SELECT id, username, roleId, nickname, telephone, 
             email, intro, createAt, updateAt 
     FROM ${this.tbName}  LIMIT ? OFFSET ?`;
     const [result] = await connection.query(statement, [pageSize, offset]);
     return result;
   }
   async queryInfo(id) {
-    const statement = `SELECT id, username, nickname, telephone, 
-            email, intro, createAt, updateAt 
-     FROM ${this.tbName}  WHERE id=?`;
+    const statement = `SELECT 
+            u.id id, 
+            u.username username, 
+            u.nickname nickname, 
+            u.telephone telephone, 
+            u.roleId roleId,
+            IF(u.roleId, JSON_OBJECT(
+              'id', r.id,
+              'roleName', r.roleName, 
+              'roleIndex', r.roleIndex, 
+              'intro', r.intro
+            ), NULL)
+            as roleInfo,
+            u.email email, 
+            u.intro intro, 
+            u.createAt createAt, 
+            u.updateAt updateAt 
+     FROM ${this.tbName} u LEFT JOIN roles r ON u.roleId=r.id  WHERE u.id=?`;
     const [result] = await connection.query(statement, [id]);
     return result[0];
   }

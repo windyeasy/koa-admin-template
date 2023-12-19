@@ -49,6 +49,7 @@ async function verifyEditUser(ctx, next) {
   if (userInfo && userInfo.id != fetchParamsId(ctx)) {
     return errorRequest.throw(USER_ALREADY_EXISTS, ctx);
   }
+
   await next();
 }
 module.exports = {
