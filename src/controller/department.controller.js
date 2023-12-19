@@ -21,16 +21,10 @@ class DepartmentController {
   }
   //   部门列表查询
   async list(ctx) {
-    // 获取处理过的分页信息
-    const { size, offset } = fetchPageInfo(ctx);
-    const result = await departmentService.queryList(offset, size);
-    const total = await departmentService.fetchTotal();
+    const result = await departmentService.queryList();
     ctx.body = successModel({
       message: "列表获取成功",
-      data: {
-        list: result,
-        total,
-      },
+      data: result,
     });
   }
   //  获取部门详情
