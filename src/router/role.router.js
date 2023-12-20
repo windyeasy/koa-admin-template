@@ -6,6 +6,7 @@ const {
   update,
   list,
   detail,
+  menuList,
 } = require("../controller/role.controller");
 const { verifyRole, verifyEditRole } = require("../middleware/role.middleware");
 const { verifyMenuList } = require("../middleware/menu.middleware");
@@ -23,4 +24,6 @@ roleRouter.patch("/:id", verifyAuth, verifyMenuList, verifyEditRole, update);
 roleRouter.get("/", verifyAuth, list);
 // 获取角色详情
 roleRouter.get("/:id", verifyAuth, detail);
+// 通过角色id获取菜单
+roleRouter.get("/:id/menu", verifyAuth, menuList);
 module.exports = roleRouter;

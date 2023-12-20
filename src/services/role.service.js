@@ -1,5 +1,8 @@
 const connection = require("../app/database");
+const { checkArrayNotEmpty } = require("../utils/checkValue");
+const { filterMenu } = require("../utils/filter_menu");
 const BaseService = require("./base.service");
+const menuService = require("./menu.service");
 
 class RoleService extends BaseService {
   // 通过角色名判断角色是否已经存在
@@ -53,6 +56,24 @@ class RoleService extends BaseService {
     await connection.query(delStatement, [roleId]);
     for (const menuId of menuList) {
       await this.addMenu(menuId, roleId);
+    }
+  }
+  // 通过角色id获取菜单列表
+  async queryMenuListByRoleId(roleId) {
+    const statement = `
+    SELECT rm.roleId roleId, 
+      JSON_ARRAYAGG(rm.menuId) menuIds 
+    FROM role_select_menu rm WHERE rm.roleId = ? 
+    GROUP BY rm.roleId;
+    `;
+    const [result] = await connection.query(statement, [roleId]);
+    const menuIds = result[0] ? result[0].menuIds : [];
+    if (checkArrayNotEmpty(menuIds)) {
+      const menuList = await menuService.queryList();
+      // 过滤掉不在menuIds的菜单
+      return filterMenu(menuIds, menuList);
+    } else {
+      return null;
     }
   }
 }

@@ -70,6 +70,14 @@ class RoleController {
       data: result,
     });
   }
+  // 获取菜单列表
+  async menuList(ctx) {
+    const result = await roleService.queryMenuListByRoleId(fetchParamsId(ctx));
+    ctx.body = successModel({
+      message: "获取菜单列表成功！",
+      data: result,
+    });
+  }
 }
 
 module.exports = new RoleController();
