@@ -23,15 +23,39 @@ class RoleService extends BaseService {
   }
   // 查询角色列表
   async queryList(offset, pageSize) {
-    const statement = `SELECT *
-    FROM ${this.tbName}  ORDER BY sort ASC LIMIT ? OFFSET ?`;
+    const statement = `SELECT 
+      r.id id, 
+      r.roleName roleName,
+      r.roleIndex roleIndex,
+      r.sort sort,
+      r.state state,
+      r.intro intro,
+      r.createAt createAt,
+      r.updateAt createAt,
+      (SELECT 
+          JSON_ARRAYAGG(rm.menuId) 
+        FROM role_select_menu rm where r.id=rm.roleId
+        GROUP BY rm.roleId) menuList 
+    FROM ${this.tbName} r  ORDER BY sort ASC LIMIT ? OFFSET ?`;
     const [result] = await connection.query(statement, [pageSize, offset]);
     return result;
   }
   //   查询角色信息
   async queryInfo(id) {
-    const statement = `SELECT *
-     FROM ${this.tbName}  WHERE id=?`;
+    const statement = `SELECT 
+    r.id id, 
+      r.roleName roleName,
+      r.roleIndex roleIndex,
+      r.sort sort,
+      r.state state,
+      r.intro intro,
+      r.createAt createAt,
+      r.updateAt createAt,
+      (SELECT 
+          JSON_ARRAYAGG(rm.menuId) 
+        FROM role_select_menu rm where r.id=rm.roleId
+        GROUP BY rm.roleId) menuList 
+     FROM ${this.tbName} r  WHERE id=?`;
     const [result] = await connection.query(statement, [id]);
     return result[0];
   }
