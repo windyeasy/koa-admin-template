@@ -43,7 +43,7 @@ class RoleService extends BaseService {
   //   查询角色信息
   async queryInfo(id) {
     const statement = `SELECT 
-    r.id id, 
+      r.id id, 
       r.roleName roleName,
       r.roleIndex roleIndex,
       r.sort sort,

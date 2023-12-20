@@ -103,6 +103,9 @@ async function verifyMenuList(ctx, next) {
       return errorRequest.throw(MENU_ID_NOT_EXISTS, ctx);
     }
   }
+  if (!ctx.request.body.menuList) {
+    ctx.request.body.menuList = [];
+  }
   await next();
 }
 module.exports = {
