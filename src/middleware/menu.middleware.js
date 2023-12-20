@@ -13,7 +13,7 @@ async function verifyMenuAdd(ctx, next) {
   const {
     menuName,
     url = "",
-    state = 1,
+
     icon = "",
     sort = 0,
     menuType = 1,
@@ -38,7 +38,7 @@ async function verifyMenuAdd(ctx, next) {
   ctx.addPayload = {
     menuName,
     url,
-    state,
+
     icon,
     sort,
     menuType,
@@ -54,7 +54,6 @@ async function verifyMenuEdit(ctx, next) {
   const {
     menuName,
     url = "",
-    state = 1,
     icon = "",
     sort = 0,
     menuType = 1,
@@ -81,7 +80,7 @@ async function verifyMenuEdit(ctx, next) {
   ctx.editPayload = {
     menuName,
     url,
-    state,
+
     icon,
     sort,
     menuType,
