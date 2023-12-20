@@ -3,7 +3,7 @@ class RequestModel {
     if (typeof messageInfo === "string") {
       return {
         code: 0,
-        messageInfo,
+        message: messageInfo,
       };
     } else {
       return {

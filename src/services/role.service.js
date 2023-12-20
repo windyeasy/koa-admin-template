@@ -46,6 +46,15 @@ class RoleService extends BaseService {
     const [result] = await connection.execute(statement, [menuId, roleId]);
     return result;
   }
+  // 为角色更新菜单
+  async updateMenus(menuList, roleId) {
+    // 删除原有菜单信息
+    const delStatement = "DELETE FROM role_select_menu WHERE roleId=?";
+    await connection.query(delStatement, [roleId]);
+    for (const menuId of menuList) {
+      await this.addMenu(menuId, roleId);
+    }
+  }
 }
 const roleService = new RoleService("roles");
 module.exports = roleService;

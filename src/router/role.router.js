@@ -18,7 +18,7 @@ roleRouter.post("/", verifyAuth, verifyMenuList, verifyRole, create);
 // 删除角色
 roleRouter.delete("/:id", verifyAuth, remove);
 // 编辑角色
-roleRouter.patch("/:id", verifyAuth, verifyEditRole, update);
+roleRouter.patch("/:id", verifyAuth, verifyMenuList, verifyEditRole, update);
 // 获取角色列表
 roleRouter.get("/", verifyAuth, list);
 // 获取角色详情

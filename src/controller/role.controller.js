@@ -34,7 +34,19 @@ class RoleController {
   // 编辑用户
   async update(ctx) {
     await roleService.update(fetchParamsId(ctx), ctx.editPayload);
-    ctx.body = successModel("编辑角色成功！");
+    const { menuList = [] } = ctx.request.body;
+    if (checkArrayNotEmpty(menuList)) {
+      try {
+        await roleService.updateMenus(menuList, fetchParamsId(ctx));
+        ctx.body = successModel("编辑角色成功！");
+      } catch (err) {
+        ctx.body = {
+          code: -3002,
+          message: "为角色添加菜单出错",
+        };
+        console.log(err);
+      }
+    }
   }
   //   角色列表查询
   async list(ctx) {
