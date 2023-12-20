@@ -32,6 +32,20 @@ class RoleService extends BaseService {
     const [result] = await connection.query(statement, [id]);
     return result[0];
   }
+  // 检测当前角色是否已经存在菜单
+  async hasMenu(menuId, roleId) {
+    const statement =
+      "SELECT * FROM role_select_menu WHERE menuId=? AND roleId=?";
+    const [result] = await connection.execute(statement, [menuId, roleId]);
+    return !!result.length;
+  }
+  // 角色添加菜单
+  async addMenu(menuId, roleId) {
+    const statement =
+      "INSERT INTO role_select_menu(menuId, roleId) VALUES(?,?)";
+    const [result] = await connection.execute(statement, [menuId, roleId]);
+    return result;
+  }
 }
 const roleService = new RoleService("roles");
 module.exports = roleService;

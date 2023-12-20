@@ -10,6 +10,15 @@ class MenuService extends BaseService {
     const menuList = await childrenQuery(result, childrenStatement);
     return menuList;
   }
+  // 判断菜单ids是否有不存在的id
+  async checkIdsNotIsExits(ids) {
+    const length = ids.length;
+    const statement = `select count(*) count from ${
+      this.tbName
+    } where id in (${ids.join()});`;
+    const [result] = await connection.query(statement, []);
+    return result[0].count === length ? false : true;
+  }
 }
 const menuService = new MenuService("menu");
 module.exports = menuService;

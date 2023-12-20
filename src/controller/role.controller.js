@@ -1,12 +1,30 @@
 const roleService = require("../services/role.service");
+const { checkArrayNotEmpty } = require("../utils/checkValue");
 const { fetchPageInfo } = require("../utils/fetch-page-info");
 const fetchParamsId = require("../utils/fetch-params-id");
 const { successModel } = require("../utils/request-model");
 
 class RoleController {
   async create(ctx) {
-    await roleService.create(ctx.addPayload);
-    ctx.body = successModel("添加角色成功");
+    const result = await roleService.create(ctx.addPayload);
+    const { menuList = [] } = ctx.request.body;
+    if (checkArrayNotEmpty(menuList)) {
+      try {
+        for (const menuId of menuList) {
+          const isExists = await roleService.hasMenu(menuId, result.insertId);
+          if (!isExists) {
+            await roleService.addMenu(menuId, result.insertId);
+          }
+        }
+        ctx.body = successModel("添加角色成功");
+      } catch (err) {
+        ctx.body = {
+          code: -3002,
+          message: "为角色添加菜单出错",
+        };
+        console.log(err);
+      }
+    }
   }
   // 删除用户
   async remove(ctx) {

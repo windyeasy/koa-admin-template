@@ -1,6 +1,11 @@
 const errorRequest = require("../error-request");
-const { FIELD_NOT_NULL, IS_EXISTS } = require("../error-request/error-type");
+const {
+  FIELD_NOT_NULL,
+  IS_EXISTS,
+  MENU_ID_NOT_EXISTS,
+} = require("../error-request/error-type");
 const menuService = require("../services/menu.service");
+const { checkArrayNotEmpty } = require("../utils/checkValue");
 const { fetchId } = require("../utils/fetch-id");
 const fetchParamsId = require("../utils/fetch-params-id");
 
@@ -88,7 +93,20 @@ async function verifyMenuEdit(ctx, next) {
   };
   await next();
 }
+
+// 验证menuList是否有不存在的id
+async function verifyMenuList(ctx, next) {
+  const { menuList = [] } = ctx.request.body;
+  if (checkArrayNotEmpty(menuList)) {
+    const flag = await menuService.checkIdsNotIsExits(menuList);
+    if (flag) {
+      return errorRequest.throw(MENU_ID_NOT_EXISTS, ctx);
+    }
+  }
+  await next();
+}
 module.exports = {
   verifyMenuAdd,
   verifyMenuEdit,
+  verifyMenuList,
 };
