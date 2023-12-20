@@ -59,6 +59,14 @@ class UserService extends BaseService {
     const [result] = await connection.query(statement, [id]);
     return result[0];
   }
+  async queryBaseInfo(id) {
+    const statement = `SELECT id, username, roleId,
+        departmentId, nickname, telephone, 
+        email, intro, createAt, updateAt 
+    FROM ${this.tbName}  WHERE id=?`;
+    const [result] = await connection.query(statement, [id]);
+    return result[0];
+  }
 }
 const userService = new UserService("user");
 module.exports = userService;

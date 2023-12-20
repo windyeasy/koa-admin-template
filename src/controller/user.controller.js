@@ -1,3 +1,4 @@
+const roleService = require("../services/role.service");
 const userService = require("../services/user.service");
 const { fetchPageInfo } = require("../utils/fetch-page-info");
 const fetchParamsId = require("../utils/fetch-params-id");
@@ -37,6 +38,23 @@ class UserController {
     ctx.body = successModel({
       message: "详情获取成功！",
       data: result,
+    });
+  }
+  async queryUserInfo(ctx) {
+    const { id } = ctx.user;
+    // 获取用户信息
+    const result = await userService.queryBaseInfo(id);
+
+    // 获取菜单信息
+    let menuList = [];
+    if (result && result.roleId) {
+      // 菜单列表
+      menuList = await roleService.queryMenuListByRoleId(result.roleId);
+    }
+    const data = { ...result, menuList };
+    ctx.body = successModel({
+      message: "用户信息获取成功！",
+      data,
     });
   }
 }

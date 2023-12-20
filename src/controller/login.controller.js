@@ -17,7 +17,8 @@ class LoginController {
       code: 0,
       message: "登录成功",
       data: {
-        ...payload,
+        id: payload.id,
+        username: payload.username,
         token,
       },
     };
