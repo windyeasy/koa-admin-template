@@ -38,7 +38,7 @@ async function verifyAuth(ctx, next) {
     console.log(err);
     ctx.user = null;
     ctx.body = {
-      code: -1012,
+      code: -401,
       message: "token无效或过期请重新登录",
     };
     return;
