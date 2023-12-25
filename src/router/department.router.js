@@ -22,4 +22,5 @@ departmentRouter.patch("/:id", verifyAuth, verifyDepartment, update);
 departmentRouter.get("/", verifyAuth, list);
 // 获取部门详情
 departmentRouter.get("/:id", verifyAuth, detail);
+// departmentRouter.get("/:r")
 module.exports = departmentRouter;

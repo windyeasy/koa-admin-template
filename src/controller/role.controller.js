@@ -8,6 +8,7 @@ class RoleController {
   async create(ctx) {
     const result = await roleService.create(ctx.addPayload);
     const { menuList = [] } = ctx.request.body;
+    console.log("玩具车角色添加");
     if (checkArrayNotEmpty(menuList)) {
       try {
         for (const menuId of menuList) {
@@ -16,6 +17,7 @@ class RoleController {
             await roleService.addMenu(menuId, result.insertId);
           }
         }
+        console.log("进入了菜单添加");
         ctx.body = successModel("添加角色成功");
       } catch (err) {
         ctx.body = {
@@ -24,6 +26,8 @@ class RoleController {
         };
         console.log(err);
       }
+    } else {
+      ctx.body = successModel("添加角色成功");
     }
   }
   // 删除用户
