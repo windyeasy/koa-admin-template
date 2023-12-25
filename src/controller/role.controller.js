@@ -50,6 +50,8 @@ class RoleController {
         };
         console.log(err);
       }
+    } else {
+      ctx.body = successModel("编辑角色成功！");
     }
   }
   //   角色列表查询
