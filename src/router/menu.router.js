@@ -19,7 +19,9 @@ menuRouter.post("/", verifyAuth, verifyMenuAdd, create);
 // 删除菜单
 menuRouter.delete("/:id", verifyAuth, remove);
 // 编辑菜单
-menuRouter.post("/", verifyAuth, verifyMenuEdit, update);
+menuRouter.patch("/:id", verifyAuth, verifyMenuEdit, update);
 // 查询菜单
 menuRouter.get("/", verifyAuth, list);
+// 查询全部菜单
+// menuRouter.get("/all/list", verifyAuth);
 module.exports = menuRouter;
