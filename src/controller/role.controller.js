@@ -84,6 +84,16 @@ class RoleController {
       data: result,
     });
   }
+  // 获取权限列表
+  async queryPermissions(ctx) {
+    const result = await roleService.queryPermissionsByRoleId(
+      fetchParamsId(ctx)
+    );
+    ctx.body = successModel({
+      message: "获取权限列表成功！",
+      data: result,
+    });
+  }
 }
 
 module.exports = new RoleController();

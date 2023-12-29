@@ -7,6 +7,7 @@ const {
   list,
   detail,
   menuList,
+  queryPermissions,
 } = require("../controller/role.controller");
 const { verifyRole, verifyEditRole } = require("../middleware/role.middleware");
 const { verifyMenuList } = require("../middleware/menu.middleware");
@@ -26,4 +27,6 @@ roleRouter.get("/", verifyAuth, list);
 roleRouter.get("/:id", verifyAuth, detail);
 // 通过角色id获取菜单
 roleRouter.get("/:id/menu", verifyAuth, menuList);
+// 通过角色id获取权限列表
+roleRouter.get("/:id/permission", verifyAuth, queryPermissions);
 module.exports = roleRouter;

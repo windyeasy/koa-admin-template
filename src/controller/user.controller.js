@@ -51,7 +51,11 @@ class UserController {
       // 菜单列表
       menuList = await roleService.queryMenuListByRoleId(result.roleId);
     }
-    const data = { ...result, menuList };
+    // 获取权限菜单
+    const permissions = await roleService.queryPermissionsByRoleId(
+      result.roleId
+    );
+    const data = { ...result, menuList, permissions };
     ctx.body = successModel({
       message: "用户信息获取成功！",
       data,

@@ -100,6 +100,18 @@ class RoleService extends BaseService {
       return null;
     }
   }
+  // 查询角色权限列表
+  async queryPermissionsByRoleId(roleId) {
+    const statement = `
+    SELECT m.permission  FROM role_select_menu rm left join menu m on m.id = rm.menuId  WHERE rm.roleId = ? and m.menuType = 2;
+    `;
+    const [result] = await connection.query(statement, [roleId]);
+    if (checkArrayNotEmpty(result)) {
+      return result.map((item) => item.permission);
+    } else {
+      return [];
+    }
+  }
 }
 const roleService = new RoleService("roles");
 module.exports = roleService;
