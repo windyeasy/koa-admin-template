@@ -1,6 +1,7 @@
 const connection = require("../app/database");
 const { checkArrayNotEmpty } = require("../utils/checkValue");
 const { filterMenu } = require("../utils/filter_menu");
+const { mapMenusToIds } = require("../utils/map-menu");
 const BaseService = require("./base.service");
 const menuService = require("./menu.service");
 
@@ -31,13 +32,15 @@ class RoleService extends BaseService {
       r.state state,
       r.intro intro,
       r.createAt createAt,
-      r.updateAt createAt,
-      (SELECT 
-          JSON_ARRAYAGG(rm.menuId) 
-        FROM role_select_menu rm where r.id=rm.roleId
-        GROUP BY rm.roleId) menuList 
+      r.updateAt createAt
     FROM ${this.tbName} r  ORDER BY sort ASC LIMIT ? OFFSET ?`;
     const [result] = await connection.query(statement, [pageSize, offset]);
+    for (const info of result) {
+      const menus = await this.queryMenuListByRoleId(info.id);
+      if (menus) {
+        info.menuList = mapMenusToIds(menus);
+      }
+    }
     return result;
   }
   //   查询角色信息
@@ -50,14 +53,20 @@ class RoleService extends BaseService {
       r.state state,
       r.intro intro,
       r.createAt createAt,
-      r.updateAt createAt,
-      (SELECT 
-          JSON_ARRAYAGG(rm.menuId) 
-        FROM role_select_menu rm where r.id=rm.roleId
-        GROUP BY rm.roleId) menuList 
+      r.updateAt createAt
      FROM ${this.tbName} r  WHERE id=?`;
     const [result] = await connection.query(statement, [id]);
-    return result[0];
+    if (checkArrayNotEmpty(result)) {
+      const info = result[0];
+      const menus = await this.queryMenuListByRoleId(info.id);
+      if (menus) {
+        info.menus = menus;
+        info.menuList = mapMenusToIds(menus);
+      }
+      return info;
+    } else {
+      return null;
+    }
   }
   // 检测当前角色是否已经存在菜单
   async hasMenu(menuId, roleId) {
