@@ -26,9 +26,9 @@ class BaseService {
     return result;
   }
   // 获取total
-  async fetchTotal() {
-    const statement = `SELECT count(*) total FROM  ${this.tbName}`;
-    const [result] = await connection.query(statement, []);
+  async fetchTotal(lastStatement = "", ...args) {
+    const statement = `SELECT count(*) total FROM  ${this.tbName} ${lastStatement}`;
+    const [result] = await connection.query(statement, [...args]);
     return result[0].total;
   }
   /**

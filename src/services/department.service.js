@@ -1,11 +1,20 @@
 const connection = require("../app/database");
 const { childrenQuery } = require("../utils/children-query");
+const { fetchLikeValue } = require("../utils/fetch-like-value");
 const BaseService = require("./base.service");
 
 class DepartmentService extends BaseService {
-  async queryList() {
+  async queryList(depName) {
+    if (depName) {
+      const statement = `SELECT *
+      FROM ${this.tbName} WHERE depName  like ?  ORDER BY sort ASC`;
+      const [result] = await connection.query(statement, [
+        fetchLikeValue(depName),
+      ]);
+      return result;
+    }
     const statement = `SELECT *
-    FROM ${this.tbName} WHERE parentId IS NULL ORDER BY sort ASC`;
+    FROM ${this.tbName} WHERE parentId IS NULL  ORDER BY sort ASC`;
     const [result] = await connection.query(statement);
     const childrenStatement = `SELECT * FROM ${this.tbName} WHERE parentId=? ORDER BY sort ASC`;
     const depList = await childrenQuery(result, childrenStatement);

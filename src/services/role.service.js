@@ -1,5 +1,6 @@
 const connection = require("../app/database");
 const { checkArrayNotEmpty } = require("../utils/checkValue");
+const { fetchLikeValue } = require("../utils/fetch-like-value");
 const { filterMenu } = require("../utils/filter_menu");
 const { mapMenusToIds } = require("../utils/map-menu");
 const BaseService = require("./base.service");
@@ -23,7 +24,7 @@ class RoleService extends BaseService {
     return !!result.length;
   }
   // 查询角色列表
-  async queryList(offset, pageSize) {
+  async queryList(roleName, offset, pageSize) {
     const statement = `SELECT 
       r.id id, 
       r.roleName roleName,
@@ -33,8 +34,12 @@ class RoleService extends BaseService {
       r.intro intro,
       r.createAt createAt,
       r.updateAt createAt
-    FROM ${this.tbName} r  ORDER BY sort ASC LIMIT ? OFFSET ?`;
-    const [result] = await connection.query(statement, [pageSize, offset]);
+    FROM ${this.tbName} r where  r.roleName like ? ORDER BY sort ASC LIMIT ? OFFSET ?`;
+    const [result] = await connection.query(statement, [
+      fetchLikeValue(roleName),
+      pageSize,
+      offset,
+    ]);
     for (const info of result) {
       const menus = await this.queryMenuListByRoleId(info.id);
       if (menus) {

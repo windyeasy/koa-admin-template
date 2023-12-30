@@ -21,7 +21,8 @@ class DepartmentController {
   }
   //   部门列表查询
   async list(ctx) {
-    const result = await departmentService.queryList();
+    const { depName } = ctx.query;
+    const result = await departmentService.queryList(depName);
     ctx.body = successModel({
       message: "列表获取成功",
       data: result,

@@ -1,5 +1,6 @@
 const roleService = require("../services/role.service");
 const { checkArrayNotEmpty } = require("../utils/checkValue");
+const { fetchLikeValue } = require("../utils/fetch-like-value");
 const { fetchPageInfo } = require("../utils/fetch-page-info");
 const fetchParamsId = require("../utils/fetch-params-id");
 const { successModel } = require("../utils/request-model");
@@ -8,7 +9,6 @@ class RoleController {
   async create(ctx) {
     const result = await roleService.create(ctx.addPayload);
     const { menuList = [] } = ctx.request.body;
-    console.log("玩具车角色添加");
     if (checkArrayNotEmpty(menuList)) {
       try {
         for (const menuId of menuList) {
@@ -58,8 +58,12 @@ class RoleController {
   async list(ctx) {
     // 获取处理过的分页信息
     const { size, offset } = fetchPageInfo(ctx);
-    const result = await roleService.queryList(offset, size);
-    const total = await roleService.fetchTotal();
+    const { roleName } = ctx.query;
+    const result = await roleService.queryList(roleName, offset, size);
+    const total = await roleService.fetchTotal(
+      "WHERE roleName like ?",
+      fetchLikeValue(roleName)
+    );
     ctx.body = successModel({
       message: "列表获取成功",
       data: {

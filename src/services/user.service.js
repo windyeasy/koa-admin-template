@@ -44,8 +44,8 @@ class UserService extends BaseService {
       fetchLikeValue(username),
       fetchLikeValue(nickname),
       fetchLikeValue(telephone),
-      formatTime(startTime) ?? 0,
-      formatTime(endTime) ?? formatTime(Date.now()),
+      startTime ?? 0,
+      endTime ?? formatTime(Date.now()),
       pageSize,
       offset,
     ]);

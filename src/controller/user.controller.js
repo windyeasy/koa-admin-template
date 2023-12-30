@@ -1,7 +1,9 @@
 const roleService = require("../services/role.service");
 const userService = require("../services/user.service");
+const { fetchLikeValue } = require("../utils/fetch-like-value");
 const { fetchPageInfo } = require("../utils/fetch-page-info");
 const fetchParamsId = require("../utils/fetch-params-id");
+const { formatTime } = require("../utils/format-time");
 const { successModel } = require("../utils/request-model");
 
 class UserController {
@@ -34,7 +36,18 @@ class UserController {
       offset,
       size
     );
-    const total = await userService.fetchTotal();
+    const total = await userService.fetchTotal(
+      `
+    WHERE username like ? and 
+    nickname like ? and 
+    telephone like ? and
+    createAt >= ? and  createAt <= ?`,
+      fetchLikeValue(username),
+      fetchLikeValue(nickname),
+      fetchLikeValue(telephone),
+      startTime ?? 0,
+      endTime ?? formatTime(Date.now())
+    );
     ctx.body = successModel({
       message: "列表获取成功",
       data: {
