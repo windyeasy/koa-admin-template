@@ -1,6 +1,6 @@
 const mysql = require("mysql2");
 
-const connecPool = mysql.createPool({
+const connectPool = mysql.createPool({
   host: "localhost",
   port: 3306,
   user: "root",
@@ -10,7 +10,7 @@ const connecPool = mysql.createPool({
 });
 
 // 检测是否已经连接数据库
-connecPool.getConnection((err, connection) => {
+connectPool.getConnection((err, connection) => {
   if (err) {
     console.log("数据库连接失败：", err);
     return;
@@ -24,5 +24,5 @@ connecPool.getConnection((err, connection) => {
     }
   });
 });
-const connection = connecPool.promise();
+const connection = connectPool.promise();
 module.exports = connection;

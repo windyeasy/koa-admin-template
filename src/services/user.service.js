@@ -1,4 +1,6 @@
 const connection = require("../app/database");
+const { fetchLikeValue } = require("../utils/fetch-like-value");
+const { formatTime } = require("../utils/format-time");
 const BaseService = require("./base.service");
 class UserService extends BaseService {
   // 通过用户名查询用户
@@ -19,12 +21,34 @@ class UserService extends BaseService {
     return !!result.length;
   }
   // 查询用户列表
-  async queryList(offset, pageSize) {
+  async queryList(
+    username,
+    nickname,
+    telephone,
+    startTime,
+    endTime,
+    offset,
+    pageSize
+  ) {
     const statement = `SELECT id, username, roleId,
             departmentId, nickname, telephone, 
             email, intro, createAt, updateAt 
-    FROM ${this.tbName}  LIMIT ? OFFSET ?`;
-    const [result] = await connection.query(statement, [pageSize, offset]);
+     FROM ${this.tbName} 
+          WHERE username like ? and 
+          nickname like ? and 
+          telephone like ? and
+          createAt >= ? and  createAt <= ?  
+          order by createAt desc 
+          LIMIT ? OFFSET ?`;
+    const [result] = await connection.query(statement, [
+      fetchLikeValue(username),
+      fetchLikeValue(nickname),
+      fetchLikeValue(telephone),
+      formatTime(startTime) ?? 0,
+      formatTime(endTime) ?? formatTime(Date.now()),
+      pageSize,
+      offset,
+    ]);
     return result;
   }
   async queryInfo(id) {

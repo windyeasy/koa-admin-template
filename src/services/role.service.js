@@ -104,7 +104,8 @@ class RoleService extends BaseService {
     if (checkArrayNotEmpty(menuIds)) {
       const menuList = await menuService.queryList();
       // 过滤掉不在menuIds的菜单
-      return filterMenu(menuIds, menuList);
+      const list = filterMenu(menuIds, menuList);
+      return list;
     } else {
       return null;
     }

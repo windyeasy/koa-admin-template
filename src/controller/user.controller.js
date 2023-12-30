@@ -23,7 +23,17 @@ class UserController {
   async list(ctx) {
     // 获取处理过的分页信息
     const { size, offset } = fetchPageInfo(ctx);
-    const result = await userService.queryList(offset, size);
+    const { username, nickname, telephone, createAt } = ctx.query;
+    const [startTime, endTime] = createAt || [];
+    const result = await userService.queryList(
+      username,
+      nickname,
+      telephone,
+      startTime,
+      endTime,
+      offset,
+      size
+    );
     const total = await userService.fetchTotal();
     ctx.body = successModel({
       message: "列表获取成功",
