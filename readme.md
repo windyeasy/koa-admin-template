@@ -1,6 +1,9 @@
 # koa-admin-template
 
 这个项目是一个使用 koa 开发 cms 后台项目模板，用 react 开发一套后台模板用于，平时写一些项目时有一个模板。
+这个项目使用 Node koa 框架开发的服务 api 后台项目模板，另外的项目请点击如下：
+
+- 基于 React.js + Ant Design 实现的管理后台模板：[windyeasy-react-admin](https://github.com/windyeasy/windyeasy-react-admin.git)
 
 ## 前言
 
@@ -29,27 +32,32 @@
 
 ## 安装使用
 
-* 未安装pnpm，安装pnpm
+- 未安装 pnpm，安装 pnpm
 
 ```shell
 npm install pnpm -g
 ```
 
-* 未安装 nodemon, nodemon 能够实现实时监听代码变化，从新刷新执行
+- 未安装 nodemon, nodemon 能够实现实时监听代码变化，从新刷新执行
 
 ```shell
 npm install nodemon -g
 ```
 
-* 克隆项目
-* 安装依赖
+- 克隆项目
+
+```shell
+git clone https://github.com/windyeasy/koa-admin-template.git
+```
+
+- 安装依赖
 
 ```shell
 cd koa-template-admin
 pnpm install
 ```
 
-* 数据库配置
+- 数据库配置
 
   1. 根路径下有`./data`里面有数据库文件，导入到 mysql
 
@@ -64,14 +72,14 @@ pnpm install
   connectionLimit: 5,
   ```
 
-* 修改本地启动端口跟目录`.env`
+- 修改本地启动端口跟目录`.env`
 
 ```shell
 SERVER_HOST = "http://localhost" # 启动服务器地址
 SERVER_PORT = 8000 #服务启动端口
 ```
 
-* 启动
+- 启动
 
 ```shell
 pnpm run start # 使用node启动，不会实时监听代码变动
