@@ -25,11 +25,16 @@ class UserService extends BaseService {
     username,
     nickname,
     telephone,
+    state,
     startTime,
     endTime,
     offset,
     pageSize
   ) {
+    // 状态查询
+    const stateQueryStatement =
+      state !== undefined && state != null ? `state=${state} and ` : "";
+
     const statement = `SELECT id, username, roleId,
             departmentId, nickname, telephone, 
             state,
@@ -38,6 +43,7 @@ class UserService extends BaseService {
           WHERE username like ? and 
           nickname like ? and 
           telephone like ? and
+          ${stateQueryStatement}
           createAt >= ? and  createAt <= ?  
           order by createAt desc 
           LIMIT ? OFFSET ?`;

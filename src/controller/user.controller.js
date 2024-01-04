@@ -25,11 +25,13 @@ class UserController {
   async list(ctx) {
     // 获取处理过的分页信息
     const { size, offset } = fetchPageInfo(ctx);
-    const { username, nickname, telephone, startTime, endTime } = ctx.query;
+    const { username, nickname, telephone, startTime, endTime, state } =
+      ctx.query;
     const result = await userService.queryList(
       username,
       nickname,
       telephone,
+      state,
       startTime,
       endTime,
       offset,
