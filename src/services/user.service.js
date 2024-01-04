@@ -11,7 +11,7 @@ class UserService extends BaseService {
   }
   // 查询用户
   async queryUser(username, password) {
-    const statement = `SELECT * FROM ${this.tbName} WHERE username=? AND password=?`;
+    const statement = `SELECT * FROM ${this.tbName} WHERE username=? AND password=? AND state=1`;
     const [result] = await connection.execute(statement, [username, password]);
     return result;
   }

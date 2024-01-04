@@ -27,7 +27,7 @@ function handleError(err, ctx, fieldName = "") {
       break;
     case USERNAME_OR_PASSWORD_ERROR:
       code = -1004;
-      message = `用户名或密码错误！`;
+      message = `用户名或密码错误，或用户已禁用！`;
       break;
     case IS_EXISTS:
       code = -1004;
