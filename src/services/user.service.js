@@ -32,6 +32,7 @@ class UserService extends BaseService {
   ) {
     const statement = `SELECT id, username, roleId,
             departmentId, nickname, telephone, 
+            state,
             email, intro, createAt, updateAt 
      FROM ${this.tbName} 
           WHERE username like ? and 
@@ -58,6 +59,7 @@ class UserService extends BaseService {
             u.nickname nickname, 
             u.telephone telephone, 
             u.roleId roleId,
+            u.state state,
             IF(u.roleId, JSON_OBJECT(
               'id', r.id,
               'roleName', r.roleName, 
@@ -86,6 +88,7 @@ class UserService extends BaseService {
   async queryBaseInfo(id) {
     const statement = `SELECT id, username, roleId,
         departmentId, nickname, telephone, 
+        state,
         email, intro, createAt, updateAt 
     FROM ${this.tbName}  WHERE id=?`;
     const [result] = await connection.query(statement, [id]);

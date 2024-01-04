@@ -18,6 +18,7 @@ async function verifyUser(ctx, next) {
     intro,
     roleId = null,
     departmentId = null,
+    state = 1,
   } = ctx.request.body;
   // 判断是否用户名密码是否为空
   if (!username || !password) {
@@ -42,6 +43,7 @@ async function verifyUser(ctx, next) {
     intro,
     roleId: fetchId(roleId),
     departmentId: fetchId(departmentId),
+    state,
   };
   await next();
 }
@@ -61,6 +63,7 @@ async function verifyEditUser(ctx, next) {
     intro,
     roleId = null,
     departmentId = null,
+    state = 1,
   } = ctx.request.body;
   // 判断是否用户名密码是否为空
   if (!username) {
@@ -87,6 +90,7 @@ async function verifyEditUser(ctx, next) {
     intro,
     roleId: fetchId(roleId),
     departmentId: fetchId(departmentId),
+    state,
   };
   await next();
 }
