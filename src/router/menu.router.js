@@ -22,6 +22,5 @@ menuRouter.delete("/:id", verifyAuth, remove);
 menuRouter.patch("/:id", verifyAuth, verifyMenuEdit, update);
 // 查询菜单
 menuRouter.get("/", verifyAuth, list);
-// 查询全部菜单
-// menuRouter.get("/all/list", verifyAuth);
+
 module.exports = menuRouter;

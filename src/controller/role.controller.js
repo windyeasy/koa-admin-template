@@ -98,6 +98,14 @@ class RoleController {
       data: result,
     });
   }
+  // 查询未禁用角色列表
+  async queryRoleAllList(ctx) {
+    const result = await roleService.allList();
+    ctx.body = successModel({
+      message: "获取角色列表成功",
+      data: result,
+    });
+  }
 }
 
 module.exports = new RoleController();

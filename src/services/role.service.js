@@ -34,7 +34,7 @@ class RoleService extends BaseService {
       r.intro intro,
       r.createAt createAt,
       r.updateAt createAt
-    FROM ${this.tbName} r where  r.roleName like ? ORDER BY sort ASC LIMIT ? OFFSET ?`;
+    FROM ${this.tbName} r where  r.roleName like ? ORDER BY r.sort ASC, r.createAt DESC LIMIT ? OFFSET ?`;
     const [result] = await connection.query(statement, [
       fetchLikeValue(roleName),
       pageSize,
@@ -126,6 +126,21 @@ class RoleService extends BaseService {
     } else {
       return [];
     }
+  }
+  // 查询未禁用所有角色列表
+  async allList() {
+    const statement = `SELECT 
+      r.id id, 
+      r.roleName roleName,
+      r.roleIndex roleIndex,
+      r.sort sort,
+      r.state state,
+      r.intro intro,
+      r.createAt createAt,
+      r.updateAt createAt
+    FROM ${this.tbName} r where  r.state=1 ORDER BY r.sort ASC, r.createAt DESC`;
+    const [result] = await connection.query(statement, []);
+    return result;
   }
 }
 const roleService = new RoleService("roles");
