@@ -6,6 +6,7 @@ const {
   update,
   list,
   detail,
+  allList,
 } = require("../controller/department.controller");
 const { verifyDepartment } = require("../middleware/department.middleware");
 
@@ -20,6 +21,8 @@ departmentRouter.delete("/:id", verifyAuth, remove);
 departmentRouter.patch("/:id", verifyAuth, verifyDepartment, update);
 // 获取部门列表
 departmentRouter.get("/", verifyAuth, list);
+// 查询未禁用全部部门列表
+departmentRouter.get("/all", verifyAuth, allList);
 // 获取部门详情
 departmentRouter.get("/:id", verifyAuth, detail);
 // departmentRouter.get("/:r")

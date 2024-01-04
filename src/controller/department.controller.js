@@ -36,6 +36,14 @@ class DepartmentController {
       data: result,
     });
   }
+  // 查询全部未禁用部门
+  async allList(ctx) {
+    const result = await departmentService.allList();
+    ctx.body = successModel({
+      message: "获取部门列表成功",
+      data: result,
+    });
+  }
 }
 
 module.exports = new DepartmentController();
