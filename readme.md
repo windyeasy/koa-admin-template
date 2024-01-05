@@ -64,12 +64,14 @@ pnpm install
   2. 修改数据库配置`./src/app/database.js`, 里面修改数据配置
 
   ```js
-  host: "localhost", // 数据库主机地址
-  port: 3306, // 数据库端口
-  user: "root", // 数据库名
-  password: "123456", // 数据库密码
-  database: "cms-tem",   // 使用的数据库
-  connectionLimit: 5,
+  const connectPool = mysql.createPool({
+    host: "localhost", // 数据库主机地址
+    port: 3306, // 数据库端口
+    user: "root", // 数据库用户
+    password: "123456", // 数据库密码
+    database: "cms-tem", // 数据库名称
+    connectionLimit: 5,
+  });
   ```
 
 - 修改本地启动端口跟目录`.env`
