@@ -85,3 +85,13 @@ SERVER_PORT = 8000 #服务启动端口
 pnpm run start # 使用node启动，不会实时监听代码变动
 pnpm run dev   # 使用nodemon, 可以实时监听代码变化
 ```
+
+## API 使用
+
+- API 文档： `./docs/api/API.md`
+- 使用 Apifox:
+  - Apifox 数据：`./docs/api/cms-tem.apifox.json`
+  - Apifox 导入接口数据
+    ![](./docs/assets/apifox-import.png)
+  - 选择接口文件
+    ![](./docs/assets/apifox-import2.png)
