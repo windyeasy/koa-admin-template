@@ -1,12 +1,14 @@
+const { UPLOAD_PATH } = require("../config/path");
 const { SERVER_HOST_PORT } = require("../config/server");
 const fileService = require("../services/file.service");
 const { successModel } = require("../utils/request-model");
-
+const fs = require("fs");
 class FileController {
   // 头像上传
   async createAvatarFile(ctx, next) {
     // 得到文件上传信息插入数据库
     const { filename, mimetype, size, originalname } = ctx.file;
+    console.log(filename);
     const userId = ctx.user.id;
     const result = await fileService.create({
       filename,
@@ -20,7 +22,7 @@ class FileController {
       message: "上传头像成功!",
       data: {
         id: result.insertId,
-        path: `${SERVER_HOST_PORT}/pictures/${result.filename}`,
+        path: `${SERVER_HOST_PORT}/pictures/${filename}`,
       },
     });
   }

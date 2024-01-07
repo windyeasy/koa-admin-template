@@ -4,7 +4,7 @@ const { verifyAuth } = require("../middleware/login.middleware");
 const {
   avatarHandler,
   verifySingleFile,
-} = require("../middleware/filter.middleware");
+} = require("../middleware/file.middleware");
 const fileRouter = new KoaRouter({
   prefix: "/file",
 });

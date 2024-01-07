@@ -10,7 +10,7 @@ const fileService = require("../services/file.service");
 const uploadAvatar = multer({
   storage: multer.diskStorage({
     // 设置文件存储路径
-    destination(_, _, callback) {
+    destination(req, file, callback) {
       callback(null, UPLOAD_PATH);
     },
     // 设置文件名称
@@ -39,13 +39,15 @@ const verifySingleFile = (fieldName) => {
  */
 async function verifyFileIsExists(ctx, next) {
   const { filename } = ctx.params;
-  const fileInfo = await fileService.queryDataByKeyValue({
+  const fileList = await fileService.queryDataByKeyValue({
     key: "filename",
     value: filename,
   });
+  const fileInfo = fileList[0];
   if (!fileInfo || !fileInfo.filename) {
     return;
   }
+
   ctx.fileInfo = fileInfo;
   await next();
 }
