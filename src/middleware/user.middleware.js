@@ -36,7 +36,7 @@ async function verifyUser(ctx, next) {
   // 添加字段内容
   ctx.addPayload = {
     username,
-    password,
+    password: md5password(password),
     nickname,
     telephone,
     email,

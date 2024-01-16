@@ -1,9 +1,5 @@
 const KoaRouter = require("@koa/router");
-const {
-  verifyUser,
-  passwordEncryption,
-  verifyEditUser,
-} = require("../middleware/user.middleware");
+const { verifyUser, verifyEditUser } = require("../middleware/user.middleware");
 
 const {
   create,
@@ -19,7 +15,7 @@ const userRouter = new KoaRouter({
   prefix: "/user",
 });
 // 添加用户
-userRouter.post("/", verifyAuth, verifyUser, passwordEncryption, create);
+userRouter.post("/", verifyAuth, verifyUser, create);
 // 删除用户
 userRouter.delete("/:id", verifyAuth, remove);
 // 编辑用户

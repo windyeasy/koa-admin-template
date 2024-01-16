@@ -17,7 +17,6 @@ class RoleController {
             await roleService.addMenu(menuId, result.insertId);
           }
         }
-        console.log("进入了菜单添加");
         ctx.body = successModel("添加角色成功");
       } catch (err) {
         ctx.body = {
