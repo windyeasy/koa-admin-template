@@ -94,8 +94,16 @@ async function verifyEditUser(ctx, next) {
   };
   await next();
 }
+async function verifyPasswordEdit(ctx, next) {
+  const { password } = ctx.request.body;
+  if (!password) {
+    errorRequest.throw(FIELD_NOT_NULL, ctx, "密码");
+  }
+  await next();
+}
 module.exports = {
   verifyUser,
   passwordEncryption,
   verifyEditUser,
+  verifyPasswordEdit,
 };

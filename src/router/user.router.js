@@ -1,5 +1,9 @@
 const KoaRouter = require("@koa/router");
-const { verifyUser, verifyEditUser } = require("../middleware/user.middleware");
+const {
+  verifyUser,
+  verifyEditUser,
+  verifyPasswordEdit,
+} = require("../middleware/user.middleware");
 
 const {
   create,
@@ -8,6 +12,7 @@ const {
   list,
   detail,
   queryUserInfo,
+  modifyPassword,
 } = require("../controller/user.controller");
 const { verifyAuth } = require("../middleware/login.middleware");
 
@@ -20,6 +25,13 @@ userRouter.post("/", verifyAuth, verifyUser, create);
 userRouter.delete("/:id", verifyAuth, remove);
 // 编辑用户
 userRouter.patch("/:id", verifyAuth, verifyEditUser, update);
+// 用户密码编辑
+userRouter.patch(
+  "/modify-password/:id",
+  verifyAuth,
+  verifyPasswordEdit,
+  modifyPassword
+);
 // 查询用户列表
 userRouter.get("/", verifyAuth, list);
 // 获取用户信息，通过token

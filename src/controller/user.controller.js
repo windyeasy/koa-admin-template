@@ -21,6 +21,12 @@ class UserController {
     await userService.update(fetchParamsId(ctx), ctx.editPayload);
     ctx.body = successModel("编辑用户成功！");
   }
+  // 密码编辑
+  async modifyPassword(ctx) {
+    const { password } = ctx.request.body;
+    await userService.update(fetchParamsId(ctx), { password });
+    ctx.body = successModel({ message: "用户密码编辑成功！" });
+  }
   // 查询用户列
   async list(ctx) {
     // 获取处理过的分页信息
@@ -46,8 +52,8 @@ class UserController {
       fetchLikeValue(username),
       fetchLikeValue(nickname),
       fetchLikeValue(telephone),
-      startTime ?? 0,
-      endTime ?? formatTime(Date.now())
+      startTime || 0,
+      endTime || formatTime(Date.now())
     );
     ctx.body = successModel({
       message: "列表获取成功",

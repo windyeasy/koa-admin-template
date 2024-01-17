@@ -47,12 +47,14 @@ class UserService extends BaseService {
           createAt >= ? and  createAt <= ?  
           order by createAt desc 
           LIMIT ? OFFSET ?`;
+    console.log(startTime);
+    console.log(endTime);
     const [result] = await connection.query(statement, [
       fetchLikeValue(username),
       fetchLikeValue(nickname),
       fetchLikeValue(telephone),
-      startTime ?? 0,
-      endTime ?? formatTime(Date.now()),
+      startTime || 0,
+      endTime || formatTime(Date.now()),
       pageSize,
       offset,
     ]);
