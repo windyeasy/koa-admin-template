@@ -3,6 +3,7 @@ const {
   verifyUser,
   verifyEditUser,
   verifyPasswordEdit,
+  passwordEncryption,
 } = require("../middleware/user.middleware");
 
 const {
@@ -30,6 +31,7 @@ userRouter.patch(
   "/modify-password/:id",
   verifyAuth,
   verifyPasswordEdit,
+  passwordEncryption,
   modifyPassword
 );
 // 查询用户列表
